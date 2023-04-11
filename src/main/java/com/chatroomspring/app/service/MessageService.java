@@ -1,2 +1,4 @@
-package com.chatroomspring.app.service;public class MessageService {
+package com.chatroomspring.app.service;
+
+public interface MessageService {
 }

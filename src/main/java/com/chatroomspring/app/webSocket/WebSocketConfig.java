@@ -1,2 +1,4 @@
-package com.chatroomspring.app.webSocket;public class WebSocketConfig {
+package com.chatroomspring.app.webSocket;
+
+public class WebSocketConfig {
 }
