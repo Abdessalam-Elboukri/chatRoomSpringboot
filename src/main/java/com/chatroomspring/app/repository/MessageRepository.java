@@ -1,5 +1,6 @@
 package com.chatroomspring.app.repository;
 
+import com.chatroomspring.app.entity.ConversationThread;
 import com.chatroomspring.app.entity.Message;
 import com.chatroomspring.app.entity.UserApp;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,6 @@ import java.util.List;
 @Repository
 public interface MessageRepository extends JpaRepository<Message,Long> {
     List<Message> findAllBySender(UserApp sender);
+
+    List<Message> findMessagesByConversationThread(ConversationThread conversationThread);
 }

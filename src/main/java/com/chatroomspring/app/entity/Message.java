@@ -18,6 +18,9 @@ public class Message {
     @ManyToOne
     private UserApp sender;
 
+    @ManyToOne
+    private ConversationThread conversationThread;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "message_recipient",
             joinColumns = @JoinColumn(name = "message_id"),

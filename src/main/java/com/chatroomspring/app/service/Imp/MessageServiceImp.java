@@ -8,10 +8,11 @@ import com.chatroomspring.app.repository.ConversationThreadRepository;
 import com.chatroomspring.app.repository.MessageRepository;
 import com.chatroomspring.app.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +28,8 @@ public class MessageServiceImp implements MessageService {
 
     @Autowired
     ConversationThreadRepository threadRepository;
+
+
 
 
     @Override
@@ -48,12 +51,13 @@ public class MessageServiceImp implements MessageService {
         collection.add(message.getSender());
         collection.addAll(message.getRecipients());
 
-        //ConversationThread checkThreadIsAlreadyStarted=threadRepository.findConversationThreadByUsers(collection);
+        ConversationThread checkThreadIsAlreadyStarted=threadRepository.findByUsers(collection,(long) collection.size());
 
-//if(checkThreadIsAlreadyStarted!=null){
-//thread.getUsers().addAll(collection);
-//thread.setStartedAt(LocalDate.now());
-//}
+                if(checkThreadIsAlreadyStarted==null){
+                thread.getUsers().addAll(collection);
+                thread.setStartedAt(LocalDate.now());
+                threadRepository.save(thread);
+                }
 
 
         message.setTime(LocalDate.now());
@@ -75,5 +79,10 @@ public class MessageServiceImp implements MessageService {
             }
         });
         return data;
+    }
+
+    @Override
+    public List<Message> getByThread(ConversationThread thread) {
+        return messageRepository.find;
     }
 }

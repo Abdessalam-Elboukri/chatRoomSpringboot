@@ -3,7 +3,9 @@ package com.chatroomspring.app.entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class UserApp {
@@ -23,6 +25,9 @@ public class UserApp {
     private LocalDateTime createdAt;
     @ManyToMany(mappedBy = "recipients")
     private List<Message> messages = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "users")
+    private Set<ConversationThread> conversations = new HashSet<>();
 
     public UserApp(Long id, String userName, String email, String password, String phone, String avatar, Boolean isBanned, Boolean isSubscribed, LocalDateTime createdAt) {
         this.id = id;
