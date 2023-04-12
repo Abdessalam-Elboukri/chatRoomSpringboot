@@ -14,6 +14,7 @@ public class Message {
     private Long id;
     private String content;
     private LocalDate time;
+    private String cryptKey;
     @ManyToOne
     private UserApp sender;
 
@@ -33,6 +34,14 @@ public class Message {
         this.time = time;
         this.sender = sender;
         this.recipients = recipients;
+    }
+
+    public String getCryptKey() {
+        return cryptKey;
+    }
+
+    public void setCryptKey(String cryptKey) {
+        this.cryptKey = cryptKey;
     }
 
     public Long getId() {

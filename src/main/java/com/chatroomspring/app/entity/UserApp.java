@@ -13,7 +13,7 @@ public class UserApp {
     private String userName;
     @Column(unique = true, nullable = false)
     private String email;
-    @Column(unique = true, nullable = false)
+    @Column(unique = false, nullable = false)
     private String password;
     @Column(unique = true, nullable = false)
     private String phone;

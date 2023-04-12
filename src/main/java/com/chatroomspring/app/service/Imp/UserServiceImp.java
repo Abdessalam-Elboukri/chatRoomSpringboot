@@ -32,4 +32,9 @@ public class UserServiceImp implements UserService {
         userApp.setSubscribed(false);
         return userRepository.save(userApp);
     }
+
+    @Override
+    public UserApp findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

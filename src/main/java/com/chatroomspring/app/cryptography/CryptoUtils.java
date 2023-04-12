@@ -1,5 +1,7 @@
 package com.chatroomspring.app.cryptography;
 
+import org.springframework.stereotype.Service;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -8,12 +10,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+@Service
 public class CryptoUtils {
 
     private static final String ALGORITHM = "AES";
-    private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
+    private static final String TRANSFORMATION = "AES";///ECB/PKCS5Padding
 
-    public static String encrypt(String message, String key) throws Exception {
+    public String encrypt(String message, String key) throws Exception {
         SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
         Cipher cipher = Cipher.getInstance(TRANSFORMATION);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
@@ -22,7 +25,7 @@ public class CryptoUtils {
         return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 
-    public static String decrypt(String encryptedMessage, String key) throws Exception {
+    public String decrypt(String encryptedMessage, String key) throws Exception {
         SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
         Cipher cipher = Cipher.getInstance(TRANSFORMATION);
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
@@ -32,10 +35,9 @@ public class CryptoUtils {
         return new String(decryptedBytes);
     }
 
-    public static String generateKey() throws NoSuchAlgorithmException {
+    public String generateKey() throws NoSuchAlgorithmException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
-        SecureRandom secureRandom = new SecureRandom();
-        keyGenerator.init(secureRandom);
+        keyGenerator.init(128);
         SecretKey secretKey = keyGenerator.generateKey();
         return Base64.getEncoder().encodeToString(secretKey.getEncoded());
     }
