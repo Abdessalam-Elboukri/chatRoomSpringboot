@@ -14,6 +14,7 @@ public class ConversationThread {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime startedAt;
+    private String name;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "thread_user",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -27,6 +28,14 @@ public class ConversationThread {
     public ConversationThread(Long id, Set<UserApp> users) {
         this.id = id;
         this.users = users;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {

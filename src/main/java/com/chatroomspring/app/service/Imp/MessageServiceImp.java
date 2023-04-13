@@ -7,18 +7,16 @@ import com.chatroomspring.app.entity.UserApp;
 import com.chatroomspring.app.repository.ConversationThreadRepository;
 import com.chatroomspring.app.repository.MessageRepository;
 import com.chatroomspring.app.service.MessageService;
+import com.chatroomspring.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
+@Transactional
 public class MessageServiceImp implements MessageService {
 
     @Autowired
@@ -29,6 +27,9 @@ public class MessageServiceImp implements MessageService {
 
     @Autowired
     ConversationThreadRepository threadRepository;
+
+    @Autowired
+    UserService userService;
 
 
 
@@ -55,6 +56,12 @@ public class MessageServiceImp implements MessageService {
         List<ConversationThread> checkThreadIsAlreadyStarted=threadRepository.findByUsers(collection,(long) collection.size());
 
                 if(checkThreadIsAlreadyStarted.isEmpty()){
+                    if(thread.getUsers().size()<2){
+                        Optional<UserApp> receiver= Optional.ofNullable(userService.findByEmail(message.getRecipients().stream().findFirst().orElseThrow().getEmail()));
+                        if (receiver.isPresent()) {
+                            thread.setName(receiver.orElseThrow().getUserName());
+                        }
+                    }
                 thread.getUsers().addAll(collection);
                 thread.setStartedAt(LocalDateTime.now());
                 threadRepository.save(thread);

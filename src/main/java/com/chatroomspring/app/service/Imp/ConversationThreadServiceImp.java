@@ -41,6 +41,8 @@ public class ConversationThreadServiceImp implements ConversationThreadService {
     public List<ConversationThread> getByUser(UserApp userApp) {
         Set<UserApp> user= new HashSet<>();
         user.add(userApp);
-        return conversationThreadRepository.findByUsers(user,1L);
+        List<ConversationThread>  threads= conversationThreadRepository.findByUsers(user,1L);
+        threads.forEach(th ->th.getUsers().forEach(userApp1 -> userApp1.setMessages(null)) );
+        return threads;
     }
 }
