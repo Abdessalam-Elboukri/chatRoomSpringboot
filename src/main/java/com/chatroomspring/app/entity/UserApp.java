@@ -41,6 +41,14 @@ public class UserApp {
         this.createdAt = createdAt;
     }
 
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
     public UserApp() {
     }
 

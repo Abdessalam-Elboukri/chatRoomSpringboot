@@ -15,6 +15,6 @@ import java.util.Set;
 public interface ConversationThreadRepository extends JpaRepository<ConversationThread,Long> {
 
     @Query("SELECT c FROM ConversationThread c JOIN c.users p WHERE p IN :users GROUP BY c HAVING COUNT(DISTINCT p) = :numParticipants")
-    ConversationThread findByUsers(@Param("users") Set<UserApp> users, @Param("numParticipants") Long numParticipants);
+    List<ConversationThread> findByUsers(@Param("users") Set<UserApp> users, @Param("numParticipants") Long numParticipants);
 
 }

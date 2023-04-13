@@ -12,6 +12,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -51,16 +52,15 @@ public class MessageServiceImp implements MessageService {
         collection.add(message.getSender());
         collection.addAll(message.getRecipients());
 
-        ConversationThread checkThreadIsAlreadyStarted=threadRepository.findByUsers(collection,(long) collection.size());
+        List<ConversationThread> checkThreadIsAlreadyStarted=threadRepository.findByUsers(collection,(long) collection.size());
 
-                if(checkThreadIsAlreadyStarted==null){
+                if(checkThreadIsAlreadyStarted.isEmpty()){
                 thread.getUsers().addAll(collection);
-                thread.setStartedAt(LocalDate.now());
+                thread.setStartedAt(LocalDateTime.now());
                 threadRepository.save(thread);
                 }
 
-
-        message.setTime(LocalDate.now());
+        message.setTime(LocalDateTime.now());
         String key=cryptoUtils.generateKey();
         message.setCryptKey(key);
         message.setContent(cryptoUtils.encrypt(message.getContent(),key));
@@ -79,10 +79,5 @@ public class MessageServiceImp implements MessageService {
             }
         });
         return data;
-    }
-
-    @Override
-    public List<Message> getByThread(ConversationThread thread) {
-        return messageRepository.find;
     }
 }

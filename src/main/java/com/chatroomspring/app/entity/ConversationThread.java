@@ -2,6 +2,7 @@ package com.chatroomspring.app.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +13,7 @@ public class ConversationThread {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate startedAt;
+    private LocalDateTime startedAt;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "thread_user",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -36,11 +37,11 @@ public class ConversationThread {
         this.id = id;
     }
 
-    public LocalDate getStartedAt() {
+    public LocalDateTime getStartedAt() {
         return startedAt;
     }
 
-    public void setStartedAt(LocalDate startedAt) {
+    public void setStartedAt(LocalDateTime startedAt) {
         this.startedAt = startedAt;
     }
 

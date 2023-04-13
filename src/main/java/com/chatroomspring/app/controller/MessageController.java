@@ -23,8 +23,6 @@ public class MessageController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    ConversationThreadService conversationThreadService;
 
     @Autowired
      SimpMessagingTemplate template;
@@ -54,11 +52,7 @@ public class MessageController {
 
     }
 
-    @GetMapping("/get-by-thread/{id}")
-    public ResponseDto getOneConversationThread(@PathVariable Long id){
-        ConversationThread thread = conversationThreadService.getById(id);
-        return new ResponseDto("200", "all message for this thread", messageService.getByThread(thread));
-    }
+
 
 
 }

@@ -1,8 +1,12 @@
 package com.chatroomspring.app.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,13 +17,11 @@ public class Message {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-    private LocalDate time;
+    private LocalDateTime time;
     private String cryptKey;
     @ManyToOne
     private UserApp sender;
 
-    @ManyToOne
-    private ConversationThread conversationThread;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "message_recipient",
@@ -31,7 +33,7 @@ public class Message {
     public Message() {
     }
 
-    public Message(Long id, String content, LocalDate time, UserApp sender, Set<UserApp> recipients) {
+    public Message(Long id, String content, LocalDateTime time, UserApp sender, Set<UserApp> recipients) {
         this.id = id;
         this.content = content;
         this.time = time;
@@ -63,14 +65,15 @@ public class Message {
         this.content = content;
     }
 
-    public LocalDate getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(LocalDate time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
+    @JsonIgnore
     public UserApp getSender() {
         return sender;
     }
@@ -79,6 +82,7 @@ public class Message {
         this.sender = sender;
     }
 
+    @JsonIgnore
     public Set<UserApp> getRecipients() {
         return recipients;
     }
