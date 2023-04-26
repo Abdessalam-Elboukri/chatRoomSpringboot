@@ -87,4 +87,9 @@ public class MessageServiceImp implements MessageService {
         });
         return data;
     }
+
+    @Override
+    public List<Message> getByThread(Long id) {
+        return null;
+    }
 }

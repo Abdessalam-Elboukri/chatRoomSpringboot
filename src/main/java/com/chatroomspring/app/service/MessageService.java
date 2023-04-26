@@ -12,4 +12,5 @@ public interface MessageService {
 
     List<Message> getMessagesBySender(UserApp sender);
 
+    List<Message> getByThread(Long id);
 }
